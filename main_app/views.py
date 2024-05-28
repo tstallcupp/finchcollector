@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 finches = [
-  {'name': 'Flick', 'species': 'zebra finch', 'description': 'energetic and lively', 'age': 1},
+  {'name': 'Flick', 'species': 'zebra finch', 'description': 'energetic and lively', 'age': 0},
   {'name': 'Peep', 'species': 'society finch', 'description': 'sociable and friendly', 'age': 2},
   {'name': 'Tweet', 'species': 'gouldian finch', 'description': 'colorful and vibrant', 'age': 3},
   {'name': 'Chirp', 'species': 'star finch', 'description': 'calm and peaceful', 'age': 2},
