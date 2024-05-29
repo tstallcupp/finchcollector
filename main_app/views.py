@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 # finches = [
 #   {'name': 'Flick', 'species': 'zebra finch', 'description': 'energetic and lively', 'age': 0},
@@ -28,3 +29,8 @@ def finches_index(request):
 def finches_detail(request, finch_id):
     finch = Finch.objects.get(id=finch_id)
     return render(request, 'finches/detail.html', { 'finch': finch })
+
+# inherit from CreateView to create our own CBV used to create finches:
+class FinchCreate(CreateView):
+    model = Finch
+    fields = '__all__'
