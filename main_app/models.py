@@ -40,3 +40,7 @@ class Feeding(models.Model):
     def __str__(self):
         # Nice method for obtaining the friendly value of a Field.choice
         return f"{self.get_meal_display()} on {self.date}"
+    
+    # change the default sort of the feedings on display
+    class Meta:
+        ordering = [ '-date' ]
