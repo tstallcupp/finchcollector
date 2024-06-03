@@ -51,6 +51,27 @@
   </div>
   <!-- New Markup Above -->
 </div>
+<!------------------- FINCH TWIGS--------------->
+<hr>
+<div class="row">
+  <div class="col s6">
+    <h3>{{ finch.name }}'s Toys</h3>
+    {% if finch.twigs.count %}
+      {% for twig in finch.twigs.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              A <span style="color: {{ twig.color }}">{{ twig.color }}</span> {{ twig.name }}
+            </span>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>No Twigs 🌿</h5>
+    {% endif %}
+  </div>
+  <!-- Available toys will come after this line -->
+</div>
 
 <!-- below all HTML -->
 <script>
