@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
+from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 
 # Import finches from models instead
-from .models import Finch
+from .models import Finch, Twig
 # Import the FeedingForm
 from .forms import FeedingForm
 
@@ -23,14 +24,16 @@ def finches_index(request):
 
 def finches_detail(request, finch_id):
     finch = Finch.objects.get(id=finch_id)
+    id_list = finch.twigs.all().values_list('id')
+    twigs_finch_doesnt_have = Twig.objects.exclude(id__in=id_list)
     # instantiate FeedingForm to be rendered in the template
     feeding_form = FeedingForm()
-    return render(request, 'finches/detail.html', { 'finch': finch, 'feeding_form': feeding_form })
+    return render(request, 'finches/detail.html', { 'finch': finch, 'feeding_form': feeding_form, 'twigs': twigs_finch_doesnt_have })
 
 # inherit from CreateView to create our own CBV used to create finches:
 class FinchCreate(CreateView):
     model = Finch
-    fields = '__all__'
+    fields = ['name', 'species', 'description', 'age']
 
 class FinchUpdate(UpdateView):
     model = Finch
@@ -52,3 +55,19 @@ def add_feeding(request, finch_id):
         new_feeding.finch_id = finch_id
         new_feeding.save()
     return redirect('detail', finch_id=finch_id)
+
+
+class TwigList(ListView):
+    model = Twig
+
+class TwigDetail(DetailView):
+    model = Twig
+
+class TwigCreate(CreateView):
+    model = Twig
+    fields = '__all__'
+
+def assoc_twig(request, finch_id, twig_id):
+    Finch.objects.get(id=finch_id).twigs.add(twig_id)
+    return redirect('detail', finch_id=finch_id)
+
